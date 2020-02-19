@@ -23,16 +23,16 @@ More information on the ADXL372 can be found in the datasheet: https://www.analo
 
 MCU                | Tested Works | Doesn't Work | Not Tested  | Notes
 ------------------ | :----------: | :----------: | :---------: | -----
-ESP32              |      X       |             |            | 
-ESP8266            |      X       |             |            | 
+ESP32              |      X       |             |            | Supports 10MHz SPI
+ESP8266            |      X       |             |            | Supports 10MHz SPI
 Atmega328 @ 16MHz  |      X       |             |            | 
 Atmega328 @ 12MHz  |      X       |             |            | 
 Atmega32u4 @ 16MHz |      X       |             |            | 
 Atmega32u4 @ 8MHz  |      X       |             |            | 
-Atmega2560 @ 16MHz |      X       |             |            | 
-ATSAM3X8E          |      X       |             |            | 
+Atmega2560 @ 16MHz |              |             |      x     | 
+ATSAM3X8E          |              |             |      x     | 
 ATSAM21D           |      X       |             |            | 
-ATtiny85 @ 16MHz*   |             |      X       |            | Change the SPI to 2MHz or less
-ATtiny85 @ 8MHz*    |             |      X       |            | Change the SPI to 2MHz or less
-Intel Curie @ 32MHz |      X       |             |            | 
-STM32              |       x      |             |            | 
+ATtiny85 @ 16MHz*   |             |             |       x     | Change the SPI to 2MHz or less
+ATtiny85 @ 8MHz*    |      x       |             |            | Change the SPI to 2MHz or less
+Intel Curie @ 32MHz |      X       |             |            | Supports 10MHz SPI
+STM32              |       x      |             |            | Supports 10MHz SPI
