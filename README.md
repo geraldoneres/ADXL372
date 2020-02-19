@@ -32,7 +32,7 @@ Atmega32u4 @ 8MHz  |      X       |             |            |
 Atmega2560 @ 16MHz |      X       |             |            | 
 ATSAM3X8E          |      X       |             |            | 
 ATSAM21D           |      X       |             |            | 
-ATtiny85 @ 16MHz   |             |      X       |            | sketch too big
-ATtiny85 @ 8MHz    |             |      X       |            | sketch too big
+ATtiny85 @ 16MHz*   |             |      X       |            | Change the SPI to 2MHz or less
+ATtiny85 @ 8MHz*    |             |      X       |            | Change the SPI to 2MHz or less
 Intel Curie @ 32MHz |      X       |             |            | 
 STM32              |       x      |             |            | 
