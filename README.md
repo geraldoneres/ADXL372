@@ -2,7 +2,7 @@
 Arduino Library for ADXL372. This code implements the spi of the ADXL372 accelerometer via hardware and software.
 
 # About the ADXL372
-The ADXL372 is a digital accelerometer that supports both SPI and I2C mode and 'range' of 200g. The Adafruit_ADXL345 driver takes advantage of I2C mode to reduce the total pin count required to use the sensor.
+The ADXL372 is a digital accelerometer that supports both SPI and I2C mode and 'range' of 200g. T
 
 More information on the ADXL345 can be found in the datasheet: https://www.analog.com/media/en/technical-documentation/data-sheets/ADXL372.pdf
 
