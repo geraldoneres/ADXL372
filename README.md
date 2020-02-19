@@ -20,3 +20,18 @@ More information on the ADXL372 can be found in the datasheet: https://www.analo
   *  ATtiny85 @ 8MHz 
 * STM32
 * Intel Curie @ 32MHz
+
+MCU                | Tested Works | Doesn't Work | Not Tested  | Notes
+------------------ | :----------: | :----------: | :---------: | -----
+Atmega328 @ 16MHz  |      X       |             |            | 
+Atmega328 @ 12MHz  |      X       |             |            | 
+Atmega32u4 @ 16MHz |      X       |             |            | 
+Atmega32u4 @ 8MHz  |      X       |             |            | 
+ESP8266            |      X       |             |            | 
+Atmega2560 @ 16MHz |      X       |             |            | 
+ATSAM3X8E          |      X       |             |            | 
+ATSAM21D           |      X       |             |            | 
+ATtiny85 @ 16MHz   |             |      X       |            | sketch too big
+ATtiny85 @ 8MHz    |             |      X       |            | sketch too big
+Intel Curie @ 32MHz |      X       |             |            | 
+STM32F2            |             |             |     X       | 
