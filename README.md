@@ -19,6 +19,6 @@ More information on the ADXL345 can be found in the datasheet: https://www.analo
  *   ATtiny85 @ 16MHz 
   *  ATtiny85 @ 8MHz 
 * STM32
-*Intel Curie @ 32MHz
+* Intel Curie @ 32MHz
 
 Written by Geraldo D. Neres
