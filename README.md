@@ -1,12 +1,12 @@
 # ADXL372 Accelerometer Driver
 Arduino Library for ADXL372. This code implements the SPI of the ADXL372 accelerometer via hardware and software.
 
-# About the ADXL372
+## About the ADXL372 ##
 The ADXL372 is a digital accelerometer that supports both SPI and I2C mode and 'range' of 200g.
 
 More information on the ADXL372 can be found in the datasheet: https://www.analog.com/media/en/technical-documentation/data-sheets/ADXL372.pdf
 
-# Compatibility
+## Compatibility ##
 
    * ESP8266 
   * ESP32 
