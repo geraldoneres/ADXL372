@@ -1,7 +1,7 @@
 /**/
 /*********************************************************************************/
 /*********************************************************************************/
-/*    @author  Geraldo Daniel Neres dos Santos                                   */
+/*    @author  Geraldo Daniel Neres                                              */
 /*    @file    ADXL372.h                                                         */
 /*    @version V1                                                                */
 /*    @date    05-February-2020                                                  */
@@ -25,9 +25,7 @@
 #include "WProgram.h"
 #endif
 
-/*
- * ADXL372 registers definition
- */
+/* ADXL372 registers definition */
 
 #define ADXL372_DEVID	                0x00u   /* Analog Devices, Inc., accelerometer ID */
 #define ADXL372_DEVID_MST	            0x01u   /* Analog Devices MEMS device ID */
@@ -93,29 +91,130 @@
 
 #define ADXL372_RESERVED_BIT        	0       /* Bit reservado */
 
-static int16_t 	ADXL372_manual_z_offset = 6;
+/* ADXL372_STATUS_1 */
+#define ADXL372_STATUS_1_DATA_RDY(x)    (((x) >> 0) & 0x1)
+#define ADXL372_STATUS_1_FIFO_RDY(x)    (((x) >> 1) & 0x1)
+#define ADXL372_STATUS_1_FIFO_FULL(x)   (((x) >> 2) & 0x1)
+#define ADXL372_STATUS_1_FIFO_OVR(x)    (((x) >> 3) & 0x1)
+#define ADXL372_STATUS_1_USR_NVM_BUSY(x)  (((x) >> 5) & 0x1)
+#define ADXL372_STATUS_1_AWAKE(x)   (((x) >> 6) & 0x1)
+#define ADXL372_STATUS_1_ERR_USR_REGS(x)  (((x) >> 7) & 0x1)
+
+/* ADXL372  MASKS */
+#define MEASURE_AUTOSLEEP_MASK    0xBF
+#define MEASURE_BANDWIDTH_MASK    0xF8
+#define MEASURE_LOW_NOISE_MSK    0xF7
+#define HPF_CORNER_MSK    0xFC
+#define MEASURE_ACTPROC_MASK    0xCF
+#define TIMING_ODR_MASK     0x1F
+#define TIMING_WUR_MASK     0xE3
+#define PWRCTRL_OPMODE_MASK   0xFC
+#define PWRCTRL_INSTON_THRESH_MASK  0xDF
+#define PWRCTRL_INSTON_THRESH_MASK  0xDF
+#define PWRCTRL_FILTER_SETTLE_MASK  0xEF
+
+/* ADXL372  POS */
+#define MEASURE_AUTOSLEEP_POS   6
+#define MEASURE_ACTPROC_POS   4
+#define TIMING_ODR_POS      5
+#define TIMING_WUR_POS      2
+#define INSTAON_THRESH_POS    5
+#define FIFO_CRL_SAMP8_POS    0
+#define FIFO_CRL_MODE_POS   1
+#define FIFO_CRL_FORMAT_POS   3
+#define PWRCTRL_FILTER_SETTLE_POS 4
+#define MEASURE_LOW_NOISE_POS    3
+#define HPF_CORNER_POS 0
+
+#define DATA_RDY  1
+#define FIFO_RDY  2
+#define FIFO_FULL 4
+#define FIFO_OVR  8
+
+#define ADXL_SPI_RNW    1
+
+/*Acceleremoter configuration*/
+#define ACT_VALUE          30     /* Activity threshold value */
+#define INACT_VALUE        30     /* Inactivity threshold value */
+
+typedef unsigned char adxl_spi_handle;
+
+typedef enum {
+  STAND_BY = 0,
+  WAKE_UP,
+  INSTANT_ON,
+  FULL_BW_MEASUREMENT
+} ADXL372_OP_MODE;
+
+typedef enum {
+  ODR_400Hz = 0,
+  ODR_800Hz,
+  ODR_1600Hz,
+  ODR_3200Hz,
+  ODR_6400Hz
+} ADXL372_ODR;
+
+typedef enum {
+  BW_200Hz = 0,
+  BW_400Hz,
+  BW_800Hz,
+  BW_1600Hz,
+  BW_3200Hz
+} ADXL372_BW;
+
+typedef enum {
+  HPF_CORNER0 = 0,
+  HPF_CORNER1,
+  HPF_CORNER2,
+  HPF_CORNER3,
+} ADXL372_HPF_CORNER;
+
+typedef enum {
+  BYPASSED = 0,
+  STREAMED,
+  TRIGGERED,
+  OLDEST_SAVED
+} ADXL372_FIFO_MODE;
+
+typedef enum {
+  FILTER_SETTLE_16 = 0,
+  FILTER_SETTLE_370
+} ADXL372_Filter_Settle;
+
+
+typedef struct {
+  short x;
+  short y;
+  short z;
+} AccelTriplet_t;
 
 struct ADXL372_AccelTriplet {
-	int16_t x;
-	int16_t y;
-	int16_t z;
+  int16_t x;
+  int16_t y;
+  int16_t z;
 };
 
 struct ADXL372_AccelTripletG {
-	float x;
-	float y;
-	float z;
+  float x;
+  float y;
+  float z;
+};
+
+struct ADXL372_AccelTripletMs2 {
+  float x;
+  float y;
+  float z;
 };
 
 struct ADXL372_Register {
-	uint8_t b7;
-	uint8_t b6;
-	uint8_t b5;
-	uint8_t b4;
-	uint8_t b3;
-	uint8_t b2;
-	uint8_t b1;
-	uint8_t b0;
+  uint8_t b7;
+  uint8_t b6;
+  uint8_t b5;
+  uint8_t b4;
+  uint8_t b3;
+  uint8_t b2;
+  uint8_t b1;
+  uint8_t b0;
 };
 
 class ADXL372 {
@@ -123,8 +222,8 @@ class ADXL372 {
     ADXL372(int8_t cspin, SPIClass *theSPI = &SPI);
     ADXL372(int8_t cspin, int8_t mosipin, int8_t misopin, int8_t sckpin);
 
-    bool begin();
-
+    uint8_t begin();
+    
     uint8_t _cs;
     uint8_t getDeviceID();
     uint8_t GetDeviceID();
@@ -137,15 +236,20 @@ class ADXL372 {
     int16_t ConvertFrom2Complement(uint8_t *high_part, uint8_t *low_part);
 
     struct ADXL372_AccelTripletG ConvertAccTripletToG(const struct ADXL372_AccelTriplet *triplet) ;
+    struct ADXL372_AccelTripletMs2 ConvertAccTripletToMs2(const struct ADXL372_AccelTriplet *triplet);
 
-    void registryData();  
+    void defaultConfigurations();
+    void registryData();
     void reset();
-    void SetRegister(uint8_t address, struct ADXL372_Register *value);
-    void SetRegister_POWER_CTL();
-    void SetRegister_MEASURE();
-    void SetRegister_HPF();
-    void SetRegister_TIMING();
     void SetAxisOffsets();
+    void GetStatus(uint8_t *status1, uint8_t *status2, uint16_t *fifo_entries);
+    uint8_t Update_reg(uint8_t reg_addr, uint8_t mask, uint8_t shift, uint8_t data);
+
+    int Set_op_mode(ADXL372_OP_MODE mode);
+    int Set_ODR(ADXL372_ODR odr);
+    int Set_BandWidth(ADXL372_BW bw);
+    int Set_low_noise(bool noise);
+    int Set_hpf_corner(ADXL372_HPF_CORNER corner);
 
   protected:
     uint8_t spiTransfer(uint8_t x = 0xFF);
