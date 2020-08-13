@@ -166,7 +166,7 @@ typedef enum {
   HPF_CORNER0 = 0,
   HPF_CORNER1,
   HPF_CORNER2,
-  HPF_CORNER3,
+  HPF_CORNER3
 } ADXL372_HPF_CORNER;
 
 typedef enum {
@@ -177,8 +177,8 @@ typedef enum {
 } ADXL372_FIFO_MODE;
 
 typedef enum {
-  FILTER_SETTLE_16 = 0,
-  FILTER_SETTLE_370
+  FILTER_SETTLE_370 = 0,
+  FILTER_SETTLE_16    
 } ADXL372_Filter_Settle;
 
 
