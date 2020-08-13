@@ -16,25 +16,40 @@
 ADXL372 adxl = ADXL372(ADXL372_CS);
 
 struct ADXL372_AccelTriplet accel;
+struct ADXL372_AccelTripletG accelG;
 
 void setup(void) {
 
   Serial.begin(115200);
-  adxl.begin();
-
-  delay(1000);
+  
+  if(adxl.begin() == ADXL372_DEVID_VAL)
+    Serial.println("ADXL372 found!");
+  else
+    Serial.println("ADXL372 don't found!");
+  
+  /* Seta a banda do acelerômetro */
+  adxl.Set_BandWidth(BW_3200Hz);
+  /* Seta o modo de baixo ruído */
+  adxl.Set_low_noise(true);
+  /* Seta o ODR */
+  adxl.Set_ODR(ODR_6400Hz);
+  /* Seta a frequência de corte do HPF */
+  adxl.Set_hpf_corner(HPF_CORNER0);
+  /* Seta o modo de operação */
+  adxl.Set_op_mode(FULL_BW_MEASUREMENT);
+  
+  delay(100);
 
 }
 
 void loop() {
 
   adxl.ReadAccTriplet(&accel);
+  accelG = adxl.ConvertAccTripletToG(&accel);
 
-  Serial.print(accel.x * 100.0 / 1000.0);
+  Serial.print(accelG.x);
   Serial.print("\t " );
-  Serial.print(accel.y * 100.0 / 1000.0);                  
+  Serial.print(accelG.y);                  
   Serial.print("\t " );
-  Serial.println((accel.z * 100.0 / 1000.0) - 2);
-
-  delay(500);
+  Serial.println(accelG.z);
 }
