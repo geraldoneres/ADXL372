@@ -1,4 +1,4 @@
-# ADXL372 Accelerometer Driver for ESP32
+# ADXL372 Accelerometer Driver for Arduino
 Arduino Library for ADXL372. This code implements the SPI of the ADXL372 accelerometer via hardware and software.
 
 ## About the ADXL372 ##
